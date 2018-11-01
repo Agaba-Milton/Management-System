@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Human Resource Management System</title>
+
+    <style>
+    body {
+  background: #f0f5f5;
+}
+
+#page_container {
+  background:gray;
+  padding: 50px;
+  width: 1200px;
+  margin: auto;
+  text-align: center;
+  border: 2px solid #000707;
+  color: #f0f5f5;
+  border-radius: 10px;
+}
+
+h1 {
+  color: #000000;
+  text-decoration: none;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 45px;
+  
+}
+
+div#div_message {
+  background: #ff6666;
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+}
+
+h2 {
+  font-weight: normal;
+}
+
+.flex_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+div#result_name, div#result_surname, div#result_salary {
+  flex: 1;
+  flex-basis: 33%;
+  background: #527a7a;
+  border: 2px solid #527a7a;
+  margin: 2px;
+  padding: 6px;
+  border-radius: 10px;
+  
+}
+
+div#result_name > input, div#result_surname > input, div#result_salary > input, div#result_name > button, div#result_surname > button, div#result_salary > button, div#result_all > button, div#add_employee > input, div#add_employee > button {
+  display: block;
+  width: 200px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid #527a7a;
+  color: #527a7a;
+  background: #f0f5f5;
+  padding: 4px;
+  text-align: center;
+  font-size: 15px;
+
+}
+
+ul {
+  border-top: 1px solid #f0f5f5;
+  width: 180px;
+  margin: auto;
+  padding: 10px;
+  text-align: left;
+}
+
+ul > li {
+  margin: 8px;
+}
+
+div#result_all, div#add_employee {
+  flex: 1;
+  flex-basis: 33%;
+  background: #527a7a;
+  border: 2px solid #527a7a;
+  margin: 2px;
+}
+
+div#add_employee {
+  flex: 2;
+  flex-basis: 66.9%;
+}
+
+div#add_employee > input, div#add_employee > button {
+  display: inline-block;
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+span#small_star {
+  font-size: 19px;
+  vertical-align: top;
+}
+
+div#result_all {
+  flex: 1;
+  flex-basis: 33%;
+}
+
+div#result_all > button {
+  width: 280px;
+  font-size: 16px;
+  margin-top: 10px;
+  border-radius: 10px;
+
+}
+
+footer{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 17px;
+    color: black;
+}
+
+div#result_name > button:hover, div#result_surname > button:hover, div#result_salary > button:hover, div#result_all > button:hover, div#add_employee > button:hover {
+  background: #ff6666;
+  color: #ffffff;
+  border-radius: 10px;
+}
+    </style>
+</head>
+<body>
+    <div id="page_container">
+        <h1>Human Resource Management System</h1>
+          
+          <div id="div_message"></div>
+          
+          <div class="flex_container">
+        
+        <div id="result_name">
+          <h2>Find Employee By First name:</h2>
+          <input type="text" id="input_name">
+        <button id="button_name">Search By FirstName</button>
+          <ul id="list_result_name"></ul>
+        </div>
+        
+        <div id="result_surname">
+          <h2>Find Employee By Surname :</h2>
+          <input type="text" id="input_surname">
+        <button id="button_surname">Search By The Surname</button>
+          <ul id="list_result_surname"></ul>
+        </div>
+        
+        <div id="result_salary">
+          <h2> Find Employee Who Earns Minimumly:</h2>
+          <input type="text" id="input_salary">
+        <button id="button_salary">Search By Salary</button>
+          <ul id="list_result_salary"></ul>
+        </div>
+        
+        </div>
+        
+        <div class="flex_container">
+        
+        <div id="add_employee">
+          <h2>Add Employee<span id="small_star">*</span></h2>
+          <input type="text" id="input_add_name" placeholder="First ame">
+          <input type="text" id="input_add_surname" placeholder="Surname">
+          <input type="text" id="input_add_salary" placeholder="Salary">
+        
+        <button id="button_add">ADD</button>
+        
+        <p><span id="small_star">*</span>the data will only be available until refresh, reload the page
+            
+        </div>
+        <br>
+    
+        
+        
+        
+        <div id="result_all">
+          <button id="button_all">VIEW ALL EMPLOYEES</button>
+          <ul id="list_result_all"></ul>
+        </div>
+        
+        </div>  <br>
+        <footer>Agaba Media House copy right reserved &copy; 2018</footer>
+        </div>
+        
+        
+      <script>
+      function Employee(firstName, surname, salary) {
+  this.firstName = firstName;
+  this.surname = surname;
+  this.salary = salary;
+}
+    // INSERTING PERMANENT EMPLOYEES IN THE SYSTEM//
+
+let emp1 = new Employee('Eric', '   ', '15000');
+let emp2 = new Employee('Lawrence', ' ', '15000');
+let emp3 = new Employee('Anthony', ' ', '5000');
+let emp4 = new Employee('Micheal', ' ', '10000');
+let emp5 = new Employee('Mansoor', '  ', '10000');
+let emp6 = new Employee('Samuel', ' ', '6000');
+
+   // Making the permanenrt Employeees constant (uing. cons)
+const empArray = [emp1, emp2, emp3, emp4, emp5, emp6];
+
+document.getElementById('button_add').addEventListener('click', function(){
+  let add_name = document.getElementById('input_add_name').value;
+  let add_surname = document.getElementById('input_add_surname').value;
+  let add_salary = document.getElementById('input_add_salary').value;
+  
+  let emp_add_from_user = new Employee(add_name.toLowerCase(), add_surname.toLowerCase(), add_salary.toLowerCase());
+  empArray.push(emp_add_from_user);
+});
+
+document.getElementById('button_name').addEventListener('click', function(){
+  check_name();
+});
+
+document.getElementById('input_name').addEventListener('keydown', function (event) {
+  if (event.which === 13) {
+    check_name();
+  }
+});
+
+document.getElementById('button_surname').addEventListener('click', function(){
+  check_surname();
+});
+
+document.getElementById('input_surname').addEventListener('keydown', function (event) {
+  if (event.which === 13) {
+    check_surname();
+  }
+});
+
+document.getElementById('button_salary').addEventListener('click', function(){
+  check_salary();
+});
+
+document.getElementById('input_salary').addEventListener('keydown', function (event) {
+  if (event.which === 13) {
+    check_salary();
+  }
+});
+
+document.getElementById('button_all').addEventListener('click', function(){
+  result_all();
+});
+
+function check_name() {
+  let emp_check = document.getElementById('input_name').value;
+  
+  document.getElementById('input_name').value = '';
+  document.getElementById('input_name').focus();
+  
+  document.getElementById('list_result_name').innerHTML = '';
+  
+  for (let i = 0; i < empArray.length; i ++) {
+    
+    if (empArray[i].firstName == emp_check.toLowerCase()) {
+      
+      let li_element = document.createElement('li');
+      let li_text = document.createTextNode('name: ' + firstToUpper(empArray[i].firstName) + ' | First name: ' + firstToUpper(empArray[i].surname) + ' | Surname: ' + empArray[i].salary  + 'UGX');
+      li_element.appendChild(li_text);
+
+      document.getElementById('list_result_name').appendChild(li_element);
+      
+    } else if (emp_check.toLowerCase() == '') {
+      document.getElementById('div_message').innerHTML = '!!! enter the name to search the database !!!';
+    } else { 
+      document.getElementById('div_message').innerHTML = '!!! we has an employee with that name in the database !!!';
+    }   
+    
+    if(document.getElementById('list_result_name').getElementsByTagName('li').length >= 1) {
+    document.getElementById('div_message').innerHTML = '';
+  }
+}
+}
+
+function check_surname() {
+  let emp_check = document.getElementById('input_surname').value;
+  
+  document.getElementById('input_surname').value = '';
+  document.getElementById('input_surname').focus();
+  
+  document.getElementById('list_result_surname').innerHTML = '';
+  
+  for (let i = 0; i < empArray.length; i ++) {
+    
+    if (empArray[i].surname == emp_check.toLowerCase()) {
+      
+      let li_element = document.createElement('li');
+      let li_text = document.createTextNode('Name: ' + firstToUpper(empArray[i].firstName) + ' | First name: ' + firstToUpper(empArray[i].surname) + ' | Surname: ' + empArray[i].salary  + 'UGX');
+      li_element.appendChild(li_text);
+
+      document.getElementById('list_result_surname').appendChild(li_element);
+      
+    } else if (emp_check.toLowerCase() == '') {
+      document.getElementById('div_message').innerHTML = '!!! enter a surname to search the base !!!';
+    } else { 
+      document.getElementById('div_message').innerHTML = 'there is no employee in the database with such a name !!! ';
+    }   
+    
+    if(document.getElementById('list_result_surname').getElementsByTagName('li').length >= 1) {
+    document.getElementById('div_message').innerHTML = '';
+  }
+}
+}
+
+function check_salary() {
+  let emp_check = document.getElementById('input_salary').value;
+  
+  document.getElementById('input_salary').value = '';
+  document.getElementById('input_salary').focus();
+  
+  document.getElementById('list_result_salary').innerHTML = '';
+  
+  for (let i = 0; i < empArray.length; i ++) {
+    
+    if (parseInt(empArray[i].salary) >= parseInt(emp_check)) {
+      
+      let li_element = document.createElement('li');
+      let li_text = document.createTextNode('Name: ' + firstToUpper(empArray[i].firstName) + ' | ' + firstToUpper(empArray[i].surname) + ' | Salary: ' + empArray[i].salary + 'UGX');
+      li_element.appendChild(li_text);
+
+      document.getElementById('list_result_salary').appendChild(li_element);
+      
+    } else if (isNaN(emp_check) || emp_check == '') {
+      document.getElementById('div_message').innerHTML = 'enter the amount (number) to search the database!!!';
+    } else {
+      document.getElementById('div_message').innerHTML = 'there is no employee in the database earning such a monthly amount !!!!';
+    }   
+    
+    if(document.getElementById('list_result_salary').getElementsByTagName('li').length >= 1) {
+    document.getElementById('div_message').innerHTML = '';
+  }
+}
+}
+
+function result_all() {
+  for (let i = 0; i < empArray.length; i ++) {
+      
+      let li_element = document.createElement('li');
+      let li_text = document.createTextNode('Name: ' + firstToUpper(empArray[i].firstName) + ' |  ' + firstToUpper(empArray[i].surname) + ' | Salary: ' + empArray[i].salary  + 'UGX');
+      li_element.appendChild(li_text);
+
+      document.getElementById('list_result_all').appendChild(li_element);
+      
+  }
+}
+
+function firstToUpper(string) 
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+      </script>   
+      
+      
+</body>
+</html>
